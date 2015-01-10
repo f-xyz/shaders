@@ -1,0 +1,17 @@
+{
+  "name": "lorenz",
+  "version": "0.0.0",
+  "authors": [
+    "andr <andrey.lischina@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ]
+}

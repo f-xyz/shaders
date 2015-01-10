@@ -1,0 +1,74 @@
+uniform float time;
+varying vec3 vPos;
+varying vec2 vTextureCoord;
+
+void main() {
+    vPos = position;
+    vTextureCoord = uv;
+    gl_Position = projectionMatrix 
+                * modelViewMatrix 
+                * vec4(vPos, 1.0);
+}
+
+////////////////////////////////////////
+
+#define PI 3.14159265
+#define abssin(x) abs(sin(x))
+
+uniform float time;
+uniform vec2 resolution;
+uniform vec2 mouse;
+uniform sampler2D tex;
+uniform sampler2D backbuffer;
+varying vec3 vPos;
+varying vec2 vTextureCoord;
+
+void main() {
+    vec2 v = gl_FragCoord.xy/resolution;
+    vec2 c = vec2(3.5*v.x-2.5, 2.0*v.y-1.0);
+
+    const float speed = 10.0;
+    vec3 zoom = vec3(
+        //1.52, 0.0,
+        //0.77568377, -0.13646737, // nice
+        //-0.28693186889504513, -0.014286693904085048,
+        //-0.3245046418497685, -0.04855101129280834,
+        -0.28693186889504513, -0.014286693904085048,
+        exp(time*speed));
+    
+    c += zoom.xy;
+    c /= zoom.z;
+    
+    float cosT = cos(time*4.0);
+    float sinT = sin(time*1.0);
+    c = c * mat2(cosT, -sinT, sinT, cosT);
+    
+    c -= zoom.xy;
+    
+    vec2 z = c;
+    
+    //gl_FragColor = texture2D(backbuffer, v);
+    gl_FragColor = vec4(0.0);
+
+    float n = min(100.0 + (time*speed*10.0), 500.0);
+    //float n = 100.0;
+    for (float i = 0.0; i > -1.0; i += 1.0) {
+        if (i > n) break;
+        z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;
+        if (dot(z,z) > 4.0 || i > n) {
+            //gl_FragColor = vec4(i/n*4.0*length(v)/sqrt(2.0));
+            
+            float q = length(v)/sqrt(2.0);
+            float f = i/n*length(v);
+            gl_FragColor += 2.0*pow(vec4(
+                q*abssin(f*1.0+PI/40.0+time*2.0),                
+                q*abssin(f*1.0+PI/40.0+time*2.0)/2.0,
+                q*abssin(f*3.0+time*3.0),
+                1.0), vec4(1.));
+            //gl_FragColor = texture2D(tex, vec2(i/n,i/n));
+            //gl_FragColor = texture2D(tex, v);
+            //gl_FragColor = vec4(0.0);
+            break;
+        }
+    }
+}
