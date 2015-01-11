@@ -30,7 +30,8 @@
     "requirejs": "~2.1.9",
     "traceur": "~0.0.9",
     "vinyl-buffer": "~1.0.0",
-    "vinyl-source-stream": "~1.0.0"
+    "vinyl-source-stream": "~1.0.0",
+    "gulp-changed": "~1.1.0"
   },
   "dependencies": {
     "three": "~0.69.0"

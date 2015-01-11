@@ -1,14 +1,10 @@
 define(function(require, exports) {
-
     console.log('# main');
 
     var gl = require('three');
     var Stats = require('stats');
-
     var running = false;
-    //var size = new gl.Vector2(800, 600);
-    var size = new gl.Vector2(innerWidth, innerHeight)
-        .divideScalar(1);
+    var size = new gl.Vector2(innerWidth, innerHeight);
     var mouse = new gl.Vector2(0, 0);
     var renderer = initGL();
     var backRenderer = initGL();

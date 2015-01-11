@@ -1,4 +1,5 @@
 .idea
-nbproject/
+nbproject
 node_modules
-lib/
+lib
+m
