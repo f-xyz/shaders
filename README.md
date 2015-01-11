@@ -1,2 +1,2 @@
-shaders
+Toy and experimental GLSL shaders.
 =======

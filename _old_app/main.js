@@ -18,7 +18,7 @@ define(function(require, exports) {
 //    backbuffer.needsUpdate = true;
 
     var dt = 0.001;
-    var shader =
+    var shaderSource =
 //             require('text!../shaders/tunnel.glsl')
 //             require('text!../shaders/demo.glsl')
 //             require('text!../shaders/inside_cube.glsl')
@@ -39,18 +39,18 @@ define(function(require, exports) {
         .split(/\/{5,}/)
         .map(function (s) { return s.trim(); });
 
-    if (shader.length === 3) {
-        var s0 = shader[0];
-        shader[0] = s0 + "\n" + shader[1];
-        shader[1] = s0 + "\n" + shader[2];
-    } else if (shader.length !== 2) {
-        var m = 'Shader parser error: length = ' + shader.length;
+    if (shaderSource.length === 3) {
+        var s0 = shaderSource[0];
+        shaderSource[0] = s0 + "\n" + shaderSource[1];
+        shaderSource[1] = s0 + "\n" + shaderSource[2];
+    } else if (shaderSource.length !== 2) {
+        var m = 'Shader parser error: length = ' + shaderSource.length;
         throw new RangeError(m);
     }
 
     var shader = {
-        vertexShader: shader[0],
-        fragmentShader: shader[1],
+        vertexShader: shaderSource[0],
+        fragmentShader: shaderSource[1],
         transparent: true,
         uniforms: {
             time:       { type: 'f',  value: 0 },
@@ -171,69 +171,4 @@ define(function(require, exports) {
         stats.update();
     }
 
-    /**
-    /**
-     * User control.
-     * @class
-     * @constructor
-     */
-    function Controls() {
-        var self = this;
-
-        ['keydown',
-         'mousemove',
-         'click',
-         'mousewheel'
-        ].forEach(function(event) {
-            addEventListener(event, function() {
-                self[event].apply(self, arguments);
-            });
-        });
-    }
-
-    Controls.prototype.mousewheel = function(e) {
-        console.log(['mouseeheel', e.wheelDelta, e]);
-
-        var wheel = 10 * e.wheelDelta / 120;
-        if (e.shiftKey) {
-            wheel *= 10;
-        }
-        app.shader.uniforms.time.value += wheel * app.dt;
-        app.render();
-    };
-
-    Controls.prototype.keydown = function(e) {
-        console.log(['keypress', e.keyCode,
-            String.fromCharCode(e.keyCode), e]);
-
-        if (e.keyCode === 32) {
-            if (app.running) {
-                console.log('stop');
-                app.stop();
-            } else {
-                console.log('start');
-                app.start();
-            }
-        } else if (e.keyCode === 13) {
-            console.log('next');
-            app.render();
-        }
-    };
-
-    Controls.prototype.mousemove = function(e) {
-        app.mouse.set(e.clientX, e.clientY);
-    };
-
-    Controls.prototype.click = function(e) {
-        var x = e.clientX;
-        var y = e.clientY;
-
-        x /= app.size.x;
-        y /= app.size.y;
-
-        console.log(['click', x, y, e]);
-    };
-
-    window.app = new App();
-    window.controls = new Controls();
 });

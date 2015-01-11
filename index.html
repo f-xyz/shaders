@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>shaders</title>
     <meta charset="utf-8" />
     <style>
         body { margin: 0; background: black; }
@@ -10,27 +10,6 @@
 </head>
 <body>
     <canvas></canvas>
-    <script src="lib/requirejs/require.js"></script>
-    <script>
-//        require.config({
-//            paths: {
-//                main: /built/.test(location.hash)
-//                    ? '__built' : 'app/main'
-//            }
-//        });
-        require.config({
-            baseUrl: 'app',
-            paths: {
-                'text': '../lib/requirejs-text/text',
-                'three': '../lib/threejs/build/three',
-                'stats': '../lib/stats.js/src/Stats'
-            },
-            shim: {
-                'three': { exports: 'THREE' },
-                'stats': { exports: 'Stats' }
-            }
-        });
-        require(['main']);
-    </script>
+    <script src="built/shaders-0.0.1.js"></script>
 </body>
 </html>
