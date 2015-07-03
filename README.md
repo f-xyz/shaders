@@ -1,4 +1,6 @@
 Toy and experimental GLSL shaders
 =================================
 
-BROKEN :(
+Broken after refactoring :(
+
+Will be fixed in future.
